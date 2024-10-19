@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Filament\Resources;
+
+use Filament\Forms;
+use App\Models\User;
+use Filament\Tables;
+use App\Models\Ticket;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use Faker\Provider\ar_EG\Text;
+use Filament\Resources\Resource;
+use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\ToggleColumn;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\TicketAssignedResource\Pages;
+use App\Filament\Resources\TicketAssignedResource\RelationManagers;
+
+class TicketAssignedResource extends Resource
+{
+    protected static ?string $model = Ticket::class;
+
+    protected static ?string $navigationIcon = 'heroicon-o-ticket';
+    protected static ?string $navigationLabel = 'Tickets Assign';
+
+    public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                //
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('id')
+                    ->label('ID Ticket')
+                    ->sortable(),
+                TextColumn::make('priority')
+                    ->label('Priority')
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label('Date'),
+                TextColumn::make('deadline')
+                    ->label('Deadline'),
+                TextColumn::make('name')
+                    ->label('Name'),
+                TextColumn::make('subcategory.name')
+                    ->label('Sub Category'),
+                TextColumn::make('location.name')
+                    ->label('Location'),
+                TextColumn::make('subject')
+                    ->label('Subject'),
+                ToggleColumn::make('assign') // Toggle untuk mengubah status assign
+                    ->label('Assigned')
+                    ->default(false),
+            ])
+            ->filters([
+                //
+            ])
+            ->actions([
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make()
+                        ->form([
+                            Forms\Components\Select::make('assigned_to')
+                                ->relationship('assigned_to', 'name')
+                                ->required(),
+                        ]),
+                    DeleteAction::make(),
+                ])
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListTicketAssigneds::route('/'),
+            'create' => Pages\CreateTicketAssigned::route('/create'),
+            'edit' => Pages\EditTicketAssigned::route('/{record}/edit'),
+        ];
+    }
+
+    public static function canViewAny(): bool
+    {
+        return auth()->check() && auth()->user()->hasRole('teknisi');
+    }
+}
