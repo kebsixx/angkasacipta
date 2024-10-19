@@ -24,6 +24,7 @@ use Filament\Forms\Components\BelongsToSelect;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TicketAssignedResource\Pages;
 use App\Filament\Resources\TicketAssignedResource\RelationManagers;
+use Filament\Tables\Columns\SelectColumn;
 
 class TicketAssignedResource extends Resource
 {
@@ -69,8 +70,12 @@ class TicketAssignedResource extends Resource
                 TextColumn::make('id')
                     ->label('ID Ticket')
                     ->sortable(),
-                TextColumn::make('priority')
+                SelectColumn::make('priority')
                     ->label('Priority')
+                    ->options([
+                        'Low' => 'Low',
+                        'High' => 'High',
+                    ])
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Date'),

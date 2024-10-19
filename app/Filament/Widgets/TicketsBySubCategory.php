@@ -8,6 +8,7 @@ use Filament\Widgets\ChartWidget;
 class TicketsBySubCategory extends ChartWidget
 {
     protected static ?string $heading = 'Tickets by Sub Category';
+    protected static string $color = 'warning';
 
     protected function getData(): array
     {
@@ -27,7 +28,7 @@ class TicketsBySubCategory extends ChartWidget
                 [
                     'label' => 'Tickets per Sub Category',
                     'data' => $data,
-                    'backgroundColor' => '#3B82F6', // Warna bar chart
+                    'backgroundColor' => '#ff6384', // Warna bar chart
                 ],
             ],
             'labels' => $labels,
@@ -36,6 +37,6 @@ class TicketsBySubCategory extends ChartWidget
 
     protected function getType(): string
     {
-        return 'line';
+        return 'bar';
     }
 }
