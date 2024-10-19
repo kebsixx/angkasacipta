@@ -15,6 +15,9 @@ class TestWidget extends BaseWidget
 {
     protected function getStats(): array
     {
+        // Hitung jumlah tiket dengan status 'on progress'
+        $onProgressCount = Ticket::where('status', 'Assigned to Technician')->count();
+
         return [
             Stat::make('Total Users', User::count())
                 ->description('New User this month')
@@ -26,6 +29,11 @@ class TestWidget extends BaseWidget
                 ->descriptionIcon('heroicon-m-ticket', IconPosition::Before)
                 ->chart([1, 5, 9, 10, 20, 40])
                 ->color('info'),
+            Stat::make('On Progress', $onProgressCount)
+                ->description('On Progress this month')
+                ->descriptionIcon('heroicon-m-clock', IconPosition::Before)
+                ->chart([1, 5, 9, 10, 20, 70])
+                ->color('warning'),
         ];
     }
 }

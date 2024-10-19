@@ -11,13 +11,16 @@ use Filament\Tables\Table;
 use Faker\Provider\ar_EG\Text;
 use Filament\Resources\Resource;
 use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Toggle;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\BelongsToSelect;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TicketAssignedResource\Pages;
 use App\Filament\Resources\TicketAssignedResource\RelationManagers;
@@ -33,7 +36,29 @@ class TicketAssignedResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Card::make([
+                    TextInput::make('id')
+                        ->label('ID Ticket')
+                        ->disabled(),
+                    TextInput::make('priority')
+                        ->label('Priority')
+                        ->disabled(),
+                    TextInput::make('created_at')
+                        ->label('Date')
+                        ->disabled(),
+                    TextInput::make('name')
+                        ->label('Nama')
+                        ->disabled(),
+                    BelongsToSelect::make('subcategory_id')
+                        ->relationship('subcategory', 'name')
+                        ->disabled(),
+                    BelongsToSelect::make('location_id')
+                        ->relationship('location', 'name')
+                        ->disabled(),
+                    TextInput::make('description')
+                        ->label('Description')
+                        ->disabled(),
+                ])
             ]);
     }
 
@@ -69,13 +94,7 @@ class TicketAssignedResource extends Resource
             ->actions([
                 ActionGroup::make([
                     ViewAction::make(),
-                    EditAction::make()
-                        ->form([
-                            Forms\Components\Select::make('assigned_to')
-                                ->relationship('assigned_to', 'name')
-                                ->required(),
-                        ]),
-                    DeleteAction::make(),
+                    EditAction::make(),
                 ])
             ])
             ->bulkActions([

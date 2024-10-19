@@ -8,11 +8,21 @@ use App\Models\Ticket;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\BelongsToSelect;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ListTicketAssignedResource\Pages;
 use App\Filament\Resources\ListTicketAssignedResource\RelationManagers;
+use Illuminate\Database\Eloquent\Model;
 
 class ListTicketAssignedResource extends Resource
 {
@@ -25,7 +35,31 @@ class ListTicketAssignedResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Card::make([
+                    TextInput::make('id')
+                        ->label('ID Ticket')
+                        ->disabled(),
+                    TextInput::make('priority')
+                        ->label('Priority')
+                        ->disabled(),
+                    TextInput::make('created_at')
+                        ->label('Date')
+                        ->disabled(),
+                    TextInput::make('name')
+                        ->label('Nama')
+                        ->disabled(),
+                    BelongsToSelect::make('subcategory_id')
+                        ->relationship('subcategory', 'name')
+                        ->disabled(),
+                    BelongsToSelect::make('location_id')
+                        ->relationship('location', 'name')
+                        ->disabled(),
+                    TextInput::make('description')
+                        ->label('Description')
+                        ->disabled(),
+                    TextInput::make('progress')
+                        ->label('Progress'),
+                ])
             ]);
     }
 
@@ -64,7 +98,11 @@ class ListTicketAssignedResource extends Resource
                     ->default(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -90,6 +128,16 @@ class ListTicketAssignedResource extends Resource
     }
 
     public static function canViewAny(): bool
+    {
+        return auth()->check() && auth()->user()->hasRole('teknisi');
+    }
+
+    public static function canView(Model $record): bool
+    {
+        return auth()->check() && auth()->user()->hasRole('teknisi');
+    }
+
+    public static function canUpdate(): bool
     {
         return auth()->check() && auth()->user()->hasRole('teknisi');
     }
