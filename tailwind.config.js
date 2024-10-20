@@ -10,4 +10,11 @@ export default {
         "./resources/**/*.js",
         "./resources/**/*.vue",
     ],
+    theme: {
+    extend: {
+      background: {
+        customBackground: 'url("your-background-image.jpg")',
+      },
+    },
+  },
 }
