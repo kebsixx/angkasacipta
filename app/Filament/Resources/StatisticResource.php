@@ -6,11 +6,11 @@ use Filament\Tables;
 use App\Models\Ticket;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Filament\Resources\Resource;
-use App\Filament\Resources\StatisticResource\Pages;
 use Faker\Provider\ar_EG\Text;
+use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use App\Filament\Resources\StatisticResource\Pages;
 
 class StatisticResource extends Resource
 {
@@ -82,6 +82,11 @@ class StatisticResource extends Resource
     }
 
     public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canEdit(Model $record): bool
     {
         return false;
     }
