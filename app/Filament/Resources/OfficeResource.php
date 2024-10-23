@@ -23,7 +23,7 @@ class OfficeResource extends Resource
     protected static ?string $model = Office::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
-    protected static ?string $navigationGroup = 'Office';
+    protected static ?string $navigationGroup = 'Section';
     protected static ?int $navigationSort = 1;
     protected static ?string $navigationLabel = 'Office';
 
