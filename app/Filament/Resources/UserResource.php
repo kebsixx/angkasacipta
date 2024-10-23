@@ -37,6 +37,8 @@ class UserResource extends Resource
                     ->schema([
                         TextInput::make('name')
                             ->required(),
+                        TextInput::make('username')
+                            ->required(),
                         TextInput::make('email')
                             ->email()
                             ->required(),
@@ -55,6 +57,7 @@ class UserResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
+                TextColumn::make('username'),
                 TextColumn::make('email'),
                 TextColumn::make('roles.name'),
             ])
