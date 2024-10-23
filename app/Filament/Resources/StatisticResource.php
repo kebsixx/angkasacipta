@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use App\Filament\Resources\StatisticResource\Pages;
 use Faker\Provider\ar_EG\Text;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 
 class StatisticResource extends Resource
 {
@@ -50,10 +51,7 @@ class StatisticResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make(),
-                ])
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -81,5 +79,10 @@ class StatisticResource extends Resource
     public static function canViewAny(): bool
     {
         return auth()->check() && auth()->user()->hasRole('admin');
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }
