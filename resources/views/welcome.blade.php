@@ -51,10 +51,10 @@
             </div>
 
             <div class="col-span-6 sm:col-span-3">
-                <label for="office_id" class="block text-sm font-medium text-gray-700">Office</label>
+                <label for="office_id" class="block text-sm font-medium text-gray-700">Section</label>
                 <select id="office_id" name="office_id" required
                     class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm">
-                    <option value="">Select Office</option>
+                    <option value="">Select Section</option>
                     @foreach ($offices as $office)
                         <option value="{{ $office->id }}">{{ $office->name }}</option>
                     @endforeach
