@@ -19,6 +19,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Components\BelongsToSelect;
 use App\Filament\Resources\TicketRecievedResource\Pages;
+use Illuminate\Database\Eloquent\Model;
 
 class TicketRecievedResource extends Resource
 {
@@ -125,5 +126,10 @@ class TicketRecievedResource extends Resource
     public static function canViewAny(): bool
     {
         return auth()->check() && auth()->user()->hasRole('admin');
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }
