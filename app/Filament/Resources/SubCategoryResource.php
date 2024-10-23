@@ -2,19 +2,20 @@
 
 namespace App\Filament\Resources;
 
+use Filament\Forms;
+use Filament\Tables;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
+use App\Models\SubCategory;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Card;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\BelongsToSelect;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SubCategoryResource\Pages;
 use App\Filament\Resources\SubCategoryResource\RelationManagers;
-use App\Models\SubCategory;
-use Filament\Forms;
-use Filament\Forms\Components\Card;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubCategoryResource extends Resource
 {
@@ -31,7 +32,12 @@ class SubCategoryResource extends Resource
             ->schema([
                 Card::make([
                     TextInput::make('name')
-                        ->label('Sub Category')
+                        ->label('Sub Category'),
+                    // Select untuk memilih Category ID
+                    BelongsToSelect::make('category_id')
+                        ->label('Category')
+                        ->relationship('category', 'name') // Relasi ke model Category
+                        ->required(), // Wajib diisi
                 ])
             ]);
     }
