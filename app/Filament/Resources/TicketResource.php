@@ -121,4 +121,9 @@ class TicketResource extends Resource
     {
         return auth()->check() && auth()->user()->hasRole('admin');
     }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
 }
