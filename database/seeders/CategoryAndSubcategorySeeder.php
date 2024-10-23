@@ -21,7 +21,8 @@ class CategoryAndSubcategorySeeder extends Seeder
             'Periferal',
             'Request',
             'Service',
-            'Software'
+            'Software',
+            'Another'
         ];
 
         // Data subkategori
