@@ -70,7 +70,8 @@ class TicketResource extends Resource
                 TextColumn::make('id')
                     ->label('ID Ticket'),
                 TextColumn::make('created_at')
-                    ->label('Date'),
+                    ->label('Date')
+                    ->sortable(),
                 TextColumn::make('office.name')
                     ->label('Office'),
                 TextColumn::make('location.name')
@@ -80,6 +81,8 @@ class TicketResource extends Resource
                 TextColumn::make('subcategory.name')
                     ->label('Subcategory'),
                 TextColumn::make('subject'),
+                TextColumn::make('progress')
+                    ->label('Progress'),
                 TextColumn::make('updated_at')
                     ->label('Last Updated'),
             ])
