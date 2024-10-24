@@ -6,13 +6,10 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use App\Filament\Auth\Login;
+use Filament\Enums\ThemeMode;
 use Filament\Support\Colors\Color;
-use Filament\Navigation\NavigationItem;
-use App\Filament\Resources\UserResource;
-use Filament\Navigation\NavigationGroup;
-use Filament\View\LegacyComponents\Page;
 use Filament\Http\Middleware\Authenticate;
-use Filament\Navigation\NavigationBuilder;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Routing\Middleware\SubstituteBindings;
@@ -22,8 +19,6 @@ use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
-use App\Filament\Auth\Login;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -63,6 +58,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->defaultThemeMode(ThemeMode::Light);
     }
 }
