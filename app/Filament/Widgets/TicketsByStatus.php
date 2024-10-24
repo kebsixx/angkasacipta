@@ -38,4 +38,24 @@ class TicketsByStatus extends ChartWidget
     {
         return 'doughnut';
     }
+
+    protected function getOptions(): array
+    {
+        return [
+            'plugins' => [
+                'legend' => [
+                    'display' => true,  // Untuk menampilkan legend
+                    'position' => 'bottom',
+                ],
+            ],
+            'scales' => [
+                'x' => [
+                    'display' => false, // Hilangkan angka di sumbu X
+                ],
+                'y' => [
+                    'display' => false, // Hilangkan angka di sumbu Y
+                ],
+            ],
+        ];
+    }
 }
