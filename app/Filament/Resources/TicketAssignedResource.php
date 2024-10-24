@@ -81,7 +81,8 @@ class TicketAssignedResource extends Resource
                 TextColumn::make('created_at')
                     ->label('Date'),
                 TextColumn::make('deadline')
-                    ->label('Deadline'),
+                    ->label('Deadline')
+                    ->dateTime('d-m-Y'),
                 TextColumn::make('name')
                     ->label('Name'),
                 TextColumn::make('subcategory.name')
