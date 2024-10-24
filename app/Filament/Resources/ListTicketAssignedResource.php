@@ -13,16 +13,17 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\TextInputColumn;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\BelongsToSelect;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ListTicketAssignedResource\Pages;
 use App\Filament\Resources\ListTicketAssignedResource\RelationManagers;
-use Illuminate\Database\Eloquent\Model;
 
 class ListTicketAssignedResource extends Resource
 {
@@ -88,7 +89,7 @@ class ListTicketAssignedResource extends Resource
                     ->searchable(),
                 TextColumn::make('description')
                     ->label('Description'),
-                TextColumn::make('progress')
+                TextInputColumn::make('progress')
                     ->label('Progress')
                     ->sortable(),
             ])
