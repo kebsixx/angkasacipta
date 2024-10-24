@@ -18,13 +18,14 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\CheckboxColumn;
 use Filament\Forms\Components\BelongsToSelect;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TicketAssignedResource\Pages;
 use App\Filament\Resources\TicketAssignedResource\RelationManagers;
-use Filament\Tables\Columns\SelectColumn;
 
 class TicketAssignedResource extends Resource
 {
@@ -91,7 +92,7 @@ class TicketAssignedResource extends Resource
                     ->label('Location'),
                 TextColumn::make('subject')
                     ->label('Subject'),
-                ToggleColumn::make('assign') // Toggle untuk mengubah status assign
+                CheckboxColumn::make('assign') // Toggle untuk mengubah status assign
                     ->label('Assigned')
                     ->default(false),
             ])

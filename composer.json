@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.8",
         "livewire/flux": "^1.0",
         "livewire/livewire": "^3.5",
+        "maatwebsite/excel": "^3.1",
         "psr/simple-cache": "2.0",
         "pxlrbt/filament-excel": "^2.3",
         "spatie/laravel-permission": "^6.9"
