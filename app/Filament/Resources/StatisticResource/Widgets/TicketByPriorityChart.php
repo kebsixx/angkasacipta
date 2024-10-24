@@ -16,27 +16,49 @@ class TicketByPriorityChart extends ChartWidget
 
     protected function getData(): array
     {
-        $data = Trend::model(Ticket::class)
-            ->between(
-                start: now()->startOfYear(),
-                end: now()->endOfYear(),
-            )
-            ->perMonth()
-            ->count('priority');
+        // Hitung jumlah ticket berdasarkan priority
+        $priorities = Ticket::selectRaw('priority, COUNT(*) as count')
+            ->groupBy('priority')
+            ->pluck('count', 'priority');
+
+        // Pastikan setiap prioritas ada (meskipun datanya 0)
+        $labels = ['Low', 'Medium', 'High'];
+        $data = collect($labels)->map(fn($label) => $priorities->get($label, 0));
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Priority',
-                    'data' => $data->map(fn(TrendValue $value) => $value->aggregate),
+                    'label' => 'Tickets by Priority',
+                    'data' => $data,
+                    'backgroundColor' => ['#FF6384', '#FFCE56', '#36A2EB'], // Warna untuk setiap kategori
                 ],
             ],
-            'labels' => $data->map(fn(TrendValue $value) => $value->date),
+            'labels' => $labels, // Label untuk Doughnut Chart
         ];
     }
 
     protected function getType(): string
     {
-        return 'line';
+        return 'doughnut';
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'plugins' => [
+                'legend' => [
+                    'display' => true,  // Untuk menampilkan legend
+                    'position' => 'bottom',
+                ],
+            ],
+            'scales' => [
+                'x' => [
+                    'display' => false, // Hilangkan angka di sumbu X
+                ],
+                'y' => [
+                    'display' => false, // Hilangkan angka di sumbu Y
+                ],
+            ],
+        ];
     }
 }
