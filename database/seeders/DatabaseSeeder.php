@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
         $adminUser = User::factory()->create([
             'name' => 'adi',
             'username' => 'admin',
-            'email' => 'admin@test.com',
         ]);
 
         $adminRole = Role::create(['name' => 'admin', 'guard_name' => 'web']);
@@ -30,7 +29,6 @@ class DatabaseSeeder extends Seeder
         $technicianUser = User::factory()->create([
             'name' => 'budi',
             'username' => 'technician',
-            'email' => 'technician@test.com',
         ]);
 
         $technicianRole = Role::create(['name' => 'teknisi', 'guard_name' => 'web']);

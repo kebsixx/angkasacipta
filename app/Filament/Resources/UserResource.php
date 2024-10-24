@@ -39,9 +39,6 @@ class UserResource extends Resource
                             ->required(),
                         TextInput::make('username')
                             ->required(),
-                        TextInput::make('email')
-                            ->email()
-                            ->required(),
                         TextInput::make('password')
                             ->password()
                             ->dehydrateStateUsing(fn(string $state) => Hash::make($state))
