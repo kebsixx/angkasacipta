@@ -16,13 +16,25 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        $user = User::factory()->create([
+        // Membuat user dengan role 'admin'
+        $adminUser = User::factory()->create([
             'name' => 'adi',
             'username' => 'admin',
             'email' => 'admin@test.com',
         ]);
-        $role = Role::create(['name' => 'admin', 'guard_name' => 'web']);
-        $user->assignRole($role);
+
+        $adminRole = Role::create(['name' => 'admin', 'guard_name' => 'web']);
+        $adminUser->assignRole($adminRole);
+
+        // Membuat user dengan role 'teknisi'
+        $technicianUser = User::factory()->create([
+            'name' => 'budi',
+            'username' => 'technician',
+            'email' => 'technician@test.com',
+        ]);
+
+        $technicianRole = Role::create(['name' => 'teknisi', 'guard_name' => 'web']);
+        $technicianUser->assignRole($technicianRole);
 
         $this->call([
             OfficeSeeder::class, // Jalankan seeder office
