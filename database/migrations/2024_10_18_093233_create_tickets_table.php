@@ -14,7 +14,7 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id(); // Kolom ID
             $table->string('name'); // Nama
-            $table->enum('priority', ['High', 'Low'])->default('Low'); // Prioritas
+            $table->enum('priority', ['High', 'Medium', 'Low'])->default('Low'); // Prioritas
             $table->dateTime('deadline'); // Deadline
             $table->unsignedBigInteger('office_id')->nullable(); // ID Office
             $table->unsignedBigInteger('location_id')->nullable(); // ID Location

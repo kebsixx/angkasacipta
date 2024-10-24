@@ -5,9 +5,10 @@ namespace App\Filament\Auth;
 use Filament\Forms\Form;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Pages\Auth\Login as BaseLogin;
-use Filament\Http\Responses\Auth\LoginResponse;
-use Maatwebsite\Excel\Validators\ValidationException;
+use Illuminate\Validation\ValidationException;
+use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 
 class Login extends BaseLogin
 {
@@ -34,11 +35,9 @@ class Login extends BaseLogin
 
     protected function getCredentialsFromFormData(array $data): array
     {
-        $login_type = 'name';
-
         return [
-            $login_type => $data['login'],
-            'password'  => $data['password'],
+            'username' => $data['login'],  // Login dengan username
+            'password' => $data['password'],
         ];
     }
 
@@ -47,9 +46,14 @@ class Login extends BaseLogin
         try {
             return parent::authenticate();
         } catch (ValidationException) {
-            throw ValidationException::withMessages([
-                'data.login' => __('filament-panels::pages/auth/login.messages.failed'),
-            ]);
+            // Tambahkan notifikasi error saat login gagal
+            Notification::make()
+                ->title('Login Failed')
+                ->body('Username or password is incorrect.')
+                ->danger()  // Membuat notifikasi berwarna merah
+                ->send();
+
+            return null; // Kembalikan null jika login gagal
         }
     }
 }
