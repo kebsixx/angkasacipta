@@ -77,7 +77,7 @@ class TicketAssignedResource extends Resource
                         'Medium' => 'Medium',
                         'High' => 'High',
                     ])
-                    ->sortable(),
+                    ->selectablePlaceholder(false),
                 TextColumn::make('created_at')
                     ->label('Date'),
                 TextColumn::make('deadline')
