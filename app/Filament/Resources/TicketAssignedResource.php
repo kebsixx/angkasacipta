@@ -74,6 +74,7 @@ class TicketAssignedResource extends Resource
                     ->label('Priority')
                     ->options([
                         'Low' => 'Low',
+                        'Medium' => 'Medium',
                         'High' => 'High',
                     ])
                     ->sortable(),
