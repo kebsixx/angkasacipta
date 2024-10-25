@@ -30,7 +30,7 @@ class TicketByPriorityChart extends ChartWidget
                 [
                     'label' => 'Tickets by Priority',
                     'data' => $data,
-                    'backgroundColor' => ['#FF6384', '#FFCE56', '#36A2EB'], // Warna untuk setiap kategori
+                    'backgroundColor' => ['#A1DCB6', '#ffd45d', '#ff6868'], // Warna untuk setiap kategori
                 ],
             ],
             'labels' => $labels, // Label untuk Doughnut Chart
