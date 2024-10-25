@@ -80,7 +80,8 @@ class TicketResource extends Resource
                     ->label('Category'),
                 TextColumn::make('subcategory.name')
                     ->label('Subcategory'),
-                TextColumn::make('subject'),
+                TextColumn::make('subject')
+                    ->limit(10),
                 TextColumn::make('progress')
                     ->label('Progress'),
                 TextColumn::make('updated_at')

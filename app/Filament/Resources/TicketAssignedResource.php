@@ -91,7 +91,8 @@ class TicketAssignedResource extends Resource
                 TextColumn::make('location.name')
                     ->label('Location'),
                 TextColumn::make('subject')
-                    ->label('Subject'),
+                    ->label('Subject')
+                    ->limit(10),
                 CheckboxColumn::make('assign') // Toggle untuk mengubah status assign
                     ->label('Assigned')
                     ->default(false),

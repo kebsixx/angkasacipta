@@ -78,7 +78,8 @@ class TicketRecievedResource extends Resource
                     ->label('Location'),
                 TextColumn::make('category.name')
                     ->label('Category'),
-                TextColumn::make('subject'),
+                TextColumn::make('subject')
+                    ->limit(10),
                 TextColumn::make('status')
                     ->badge()
                     ->icon(fn(string $state): string => match ($state) {

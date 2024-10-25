@@ -43,9 +43,11 @@ class StatisticResource extends Resource
                     ->label('Category'),
                 TextColumn::make('subcategory.name')
                     ->label('Subcategory'),
-                TextColumn::make('subject'),
-                TextColumn::make('updated_at')
-                    ->label('Last Updated'),
+                TextColumn::make('subject')
+                    ->label('Subject')
+                    ->limit(10),
+                TextColumn::make('priority')
+                    ->label('Priority'),
             ])
             ->filters([
                 //
