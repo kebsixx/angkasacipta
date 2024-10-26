@@ -102,7 +102,8 @@ class TicketResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
                 ExportBulkAction::make()
-            ]);
+            ])
+            ->defaultSort('id', 'desc');
     }
 
     public static function getRelations(): array
