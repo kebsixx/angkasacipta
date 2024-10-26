@@ -73,7 +73,15 @@ class ListTicketAssignedResource extends Resource
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('priority')
-                    ->label('Priority'),
+                    ->label('Priority')
+                    ->color(fn(string $state): string => match ($state) {
+                        'High' => 'danger',
+                        'Medium' => 'warning',
+                        'Low' => 'success',
+                        default => 'primary',
+                    })
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->label('Date'),
                 TextColumn::make('deadline')
