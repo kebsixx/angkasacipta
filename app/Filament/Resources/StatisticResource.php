@@ -10,7 +10,12 @@ use Faker\Provider\ar_EG\Text;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use pxlrbt\FilamentExcel\Columns\Column;
+use Filament\Tables\Actions\ExportAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use App\Filament\Exports\TicketByPriorityExporter;
 use App\Filament\Resources\StatisticResource\Pages;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class StatisticResource extends Resource
 {
@@ -34,7 +39,8 @@ class StatisticResource extends Resource
                 TextColumn::make('id')
                     ->label('ID Ticket'),
                 TextColumn::make('created_at')
-                    ->label('Date'),
+                    ->label('Date')
+                    ->sortable(),
                 TextColumn::make('office.name')
                     ->label('Office'),
                 TextColumn::make('location.name')
@@ -47,7 +53,8 @@ class StatisticResource extends Resource
                     ->label('Subject')
                     ->limit(10),
                 TextColumn::make('priority')
-                    ->label('Priority'),
+                    ->label('Priority')
+                    ->sortable(),
             ])
             ->filters([
                 //
@@ -58,6 +65,10 @@ class StatisticResource extends Resource
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                ]),
+                ExportBulkAction::make()->exports([
+                    ExcelExport::make('table')
+                        ->fromTable()
                 ]),
             ]);
     }
