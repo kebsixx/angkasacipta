@@ -8,10 +8,14 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Faker\Provider\ar_EG\Text;
 use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
 use pxlrbt\FilamentExcel\Columns\Column;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\ExportAction;
+use Illuminate\Database\Eloquent\Builder;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use App\Filament\Exports\TicketByPriorityExporter;
 use App\Filament\Resources\StatisticResource\Pages;
@@ -37,7 +41,8 @@ class StatisticResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')
-                    ->label('ID Ticket'),
+                    ->label('ID Ticket')
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->label('Date')
                     ->sortable(),
@@ -52,12 +57,36 @@ class StatisticResource extends Resource
                 TextColumn::make('subject')
                     ->label('Subject')
                     ->limit(10),
+                TextColumn::make('progress')
+                    ->label('Progress')
+                    ->sortable(),
                 TextColumn::make('priority')
                     ->label('Priority')
                     ->sortable(),
             ])
+            ->searchPlaceholder('Search ID Ticket')
+            ->groups([
+                Group::make('created_at')
+                    ->label('Date')
+                    ->date(),
+            ])
             ->filters([
-                //
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from'),
+                        DatePicker::make('created_until'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn(Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    })
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -70,7 +99,8 @@ class StatisticResource extends Resource
                     ExcelExport::make('table')
                         ->fromTable()
                 ]),
-            ]);
+            ])
+            ->defaultSort('id', 'desc');
     }
 
     public static function getRelations(): array
