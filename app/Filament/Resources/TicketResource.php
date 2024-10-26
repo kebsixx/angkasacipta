@@ -19,6 +19,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\DateTimePicker;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use Filament\Forms\Components\BelongsToSelect;
 use App\Filament\Resources\TicketResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -101,7 +102,11 @@ class TicketResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-                ExportBulkAction::make()
+                ExportBulkAction::make()->exports([
+                    ExcelExport::make()
+                        ->fromTable()
+                        ->withFilename('Tickets - ' . date('Y-m-d')),
+                ])
             ])
             ->defaultSort('id', 'desc');
     }

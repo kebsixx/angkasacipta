@@ -96,9 +96,9 @@ class StatisticResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
                 ExportBulkAction::make()->exports([
-                    ExcelExport::make('table')
-                        ->fromTable(),
-                    ExcelExport::make()->withFilename('Tickets - ' . date('Y-m-d')),
+                    ExcelExport::make()
+                        ->fromTable()
+                        ->withFilename('Tickets - ' . date('Y-m-d')),
                 ]),
             ])
             ->defaultSort('id', 'desc');
