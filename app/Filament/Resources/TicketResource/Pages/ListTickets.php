@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\TicketResource\Pages;
 
-use App\Filament\Resources\TicketResource;
 use Filament\Actions;
+use App\Filament\Exports\TicketExporter;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\TicketResource;
 
 class ListTickets extends ListRecords
 {
@@ -14,6 +15,8 @@ class ListTickets extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            Actions\ExportAction::make()
+                ->exporter(TicketExporter::class)
         ];
     }
 }
