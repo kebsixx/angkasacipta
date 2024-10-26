@@ -97,7 +97,8 @@ class StatisticResource extends Resource
                 ]),
                 ExportBulkAction::make()->exports([
                     ExcelExport::make('table')
-                        ->fromTable()
+                        ->fromTable(),
+                    ExcelExport::make()->withFilename('Tickets - ' . date('Y-m-d')),
                 ]),
             ])
             ->defaultSort('id', 'desc');

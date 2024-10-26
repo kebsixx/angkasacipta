@@ -15,8 +15,6 @@ class ListTickets extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
-            Actions\ExportAction::make()
-                ->exporter(TicketExporter::class)
         ];
     }
 }
