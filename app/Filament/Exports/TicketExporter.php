@@ -3,11 +3,9 @@
 namespace App\Filament\Exports;
 
 use App\Models\Ticket;
-use Illuminate\Support\Facades\Log;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Models\Export;
-use Filament\Actions\Exports\Enums\ExportFormat;
 
 class TicketExporter extends Exporter
 {
@@ -34,17 +32,15 @@ class TicketExporter extends Exporter
         ];
     }
 
-    public function getFormats(): array
-    {
-        return [
-            ExportFormat::Csv,
-        ];
-    }
+    // public function getFormats(): array
+    // {
+    //     return [
+    //         ExportFormat::Csv,
+    //     ];
+    // }
 
     public static function getCompletedNotificationBody(Export $export): string
     {
-        Log::info('Notifikasi ekspor dijalankan'); // Debugging log
-
         $body = 'Your ticket export has completed and ' . number_format($export->successful_rows) . ' ' . str('row')->plural($export->successful_rows) . ' exported.';
 
         if ($failedRowsCount = $export->getFailedRowsCount()) {
