@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [TicketController::class, 'index'])->name('welcome');
-Route::post('/create-ticket', [TicketController::class, 'store'])->name('ticket.store');
+Route::post('/tickets', [TicketController::class, 'store'])->name('ticket.store');
 
-Route::get('/tickets', [TicketController::class, 'list'])->name('ticket.list');  // Halaman tabel tiket
+// Remove atau comment out route list jika tidak digunakan
+// Route::get('/tickets', [TicketController::class, 'list'])->name('tickets.list');

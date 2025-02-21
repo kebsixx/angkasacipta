@@ -7,6 +7,7 @@ use App\Models\Ticket;
 use App\Models\Category;
 use App\Models\Location;
 use App\Models\Subcategory;
+use Filament\Notifications\Notification;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -38,19 +39,16 @@ class TicketController extends Controller
 
         Ticket::create($validatedData);
 
-        // Redirect ke halaman tabel tiket dengan pesan sukses
-        return redirect()->route('ticket.list')->with('success', 'Ticket created successfully.');
+        Notification::make()
+            ->title('New ticket created')
+            ->body("New ticket created by {$validatedData['name']}")
+            ->icon('heroicon-o-ticket')
+            ->send();
+
+        // Redirect ke form ticket dengan pesan sukses
+        return redirect()->route('welcome')->with('success', 'Ticket has been submitted successfully!');
     }
 
-
-    public function list()
-    {
-        // Ambil 10 tiket terbaru dan sertakan relasi
-        $tickets = Ticket::with(['office', 'location', 'category', 'subcategory'])
-            ->latest('created_at') // Urutkan dari tiket terbaru
-            ->take(10) // Batasi hanya 10 tiket terbaru
-            ->get();
-
-        return view('tickets.index', compact('tickets'));
-    }
+    // Remove atau comment out method list() jika tidak digunakan
+    // public function list() {...}
 }
